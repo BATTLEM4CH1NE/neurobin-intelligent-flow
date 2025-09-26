@@ -2,41 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* NeuroBin Dark Theme Design System - AI-Powered Waste Management */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark Theme Base Colors */
+    --background: 220 13% 6%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card and Surface Colors */
+    --card: 220 13% 8%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 13% 8%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Green for Sustainability */
+    --primary: 142 76% 36%;
+    --primary-foreground: 220 13% 6%;
+    --primary-hover: 142 76% 32%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Cool Gray */
+    --secondary: 215 25% 15%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted Colors */
+    --muted: 215 25% 12%;
+    --muted-foreground: 217.9 10.6% 64.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Tech Blue */
+    --accent: 217 91% 60%;
+    --accent-foreground: 220 13% 6%;
 
+    /* Destructive */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Borders and Inputs */
+    --border: 215 25% 15%;
+    --input: 215 25% 15%;
+    --ring: 142 76% 36%;
 
-    --radius: 0.5rem;
+    /* AI Theme Colors */
+    --ai-primary: 258 90% 66%;
+    --ai-secondary: 142 76% 36%;
+    --ai-accent: 217 91% 60%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(142 76% 36%), hsl(217 91% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 13% 6%) 0%, hsl(215 25% 12%) 50%, hsl(220 13% 8%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(220 13% 8%), hsl(215 25% 12%));
+
+    /* Shadows */
+    --shadow-glow: 0 0 30px hsl(142 76% 36% / 0.3);
+    --shadow-card: 0 4px 20px hsl(220 13% 3% / 0.4);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -92,6 +113,26 @@ All colors MUST be HSL.
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  /* Custom Animations and Styles */
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px hsl(142 76% 36% / 0.3); }
+    50% { box-shadow: 0 0 30px hsl(142 76% 36% / 0.6); }
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
 }
 
 @layer base {
@@ -100,6 +141,11 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 }

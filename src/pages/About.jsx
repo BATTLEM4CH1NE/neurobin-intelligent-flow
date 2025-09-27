@@ -59,6 +59,39 @@ const About = () => {
           </p>
         </div>
 
+        {/* Visual Demo Section */}
+        <section className="mb-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Visual Demo</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Watch our AI-powered waste management system in action. See how our intelligent technology 
+              identifies, sorts, and optimizes waste processing with unprecedented accuracy and efficiency.
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-gradient-card rounded-2xl p-8">
+              <div className="relative overflow-hidden rounded-xl shadow-2xl">
+                <video 
+                  controls 
+                  className="w-full h-auto"
+                  poster="/videos/visual_demo_2.mp4"
+                >
+                  <source src="/videos/visual_demo_2.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              
+              <div className="mt-6 text-center">
+                <h3 className="text-xl font-semibold mb-2">NeuroBin AI in Action</h3>
+                <p className="text-muted-foreground">
+                  Experience the future of waste management with our intelligent sorting technology
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Our Work Section */}
         <section className="mb-20">
           <div className="text-center mb-12">

@@ -15,7 +15,7 @@ const Navigation = () => {
     { name: "NeuroBin AI", path: "/neurobin-ai" },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path) => location.pathname === path;
 
   return (
     <nav className="bg-card/80 backdrop-blur-md border-b border-border sticky top-0 z-50">

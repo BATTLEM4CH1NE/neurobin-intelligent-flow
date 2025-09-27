@@ -5,38 +5,22 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Brain, Camera, Zap, Upload, FileImage, BarChart3, AlertCircle, X } from "lucide-react";
 
-interface WasteResult {
-  waste_type: string;
-  confidence: number;
-  reasoning: string;
-  disposal_method: string;
-}
-
-interface WasteConfig {
-  number: number;
-  label: string;
-  cardClass: string;
-  iconClass: string;
-  textClass: string;
-  iconSvg: string;
-}
-
 const NeuroBinAI = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string>("");
-  const [analysisResult, setAnalysisResult] = useState<WasteResult | null>(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const [analysisResult, setAnalysisResult] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [error, setError] = useState<string>("");
-  const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
+  const [error, setError] = useState("");
+  const [cameraStream, setCameraStream] = useState(null);
   
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const fileInputRef = useRef(null);
 
-  const wasteConfigs: Record<string, WasteConfig> = {
+  const wasteConfigs = {
     'biodegradable': { 
       number: 1, 
       label: 'Biodegradable Waste', 
@@ -87,7 +71,7 @@ const NeuroBinAI = () => {
     }
   };
 
-  const resizeImage = useCallback((file: File, maxWidth: number, maxHeight: number, quality: number): Promise<string> => {
+  const resizeImage = useCallback((file, maxWidth, maxHeight, quality) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -115,14 +99,14 @@ const NeuroBinAI = () => {
           resolve(canvas.toDataURL('image/jpeg', quality));
         };
         img.onerror = reject;
-        img.src = e.target?.result as string;
+        img.src = e.target?.result;
       };
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
   }, []);
 
-  const handleFileUpload = useCallback(async (file: File) => {
+  const handleFileUpload = useCallback(async (file) => {
     if (!file.type.startsWith('image/')) {
       setError("Please upload a valid image file.");
       return;
@@ -262,14 +246,14 @@ Respond ONLY with a valid JSON object containing 'waste_type', 'confidence', 're
 
       if (candidate && candidate.content?.parts?.[0]?.text) {
         const text = candidate.content.parts[0].text;
-        const parsedJson = JSON.parse(text) as WasteResult;
+        const parsedJson = JSON.parse(text);
         setAnalysisResult(parsedJson);
       } else {
         throw new Error("Invalid response structure or empty result from the API.");
       }
     } catch (error) {
       console.error("Classification Error:", error);
-      setError((error as Error).message || "An unexpected error occurred. Please try again.");
+      setError(error.message || "An unexpected error occurred. Please try again.");
       setShowResults(false);
     } finally {
       setIsAnalyzing(false);
@@ -289,7 +273,7 @@ Respond ONLY with a valid JSON object containing 'waste_type', 'confidence', 're
     }
   }, [stopCamera]);
 
-  const getWasteConfig = (wasteType: string) => {
+  const getWasteConfig = (wasteType) => {
     const normalizedType = wasteType.toLowerCase().replace(/ waste/g, '').replace(/-/g, '').replace(/\s/g, '');
     return wasteConfigs[normalizedType] || wasteConfigs['nonrecyclable'];
   };
